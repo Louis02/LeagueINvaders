@@ -17,13 +17,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	final int GAME_STATE = 1;
 
 	final int END_STATE = 2;
-
+	ObjectManager obj;
 	int CURRENT_STATE;
 	Font titleFont;
 	RocketShip rock = new RocketShip(250, 750, 50, 50);
+
 	public GamePanel() {
 		timer = new Timer(1000 / 60, this);
 		titleFont = new Font("arial", Font.PLAIN, 48);
+		obj = new ObjectManager(rock);
 	}
 
 	@Override
@@ -74,7 +76,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void updateGameState() {
-		rock.update();
+		obj.update();
 	}
 
 	void updateEndState() {
@@ -93,7 +95,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.setColor(Color.black);
 
 		g.fillRect(0, 0, LeagueInvaders.width, LeagueInvaders.height);
-		rock.draw(g);
+		obj.draw(g);
 	}
 
 	void drawEndState(Graphics g) {
@@ -122,35 +124,43 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				CURRENT_STATE = MENU_STATE;
 
 			}
+
 		}
-		if(e.getKeyCode() == KeyEvent.VK_UP){
-			rock.up=true;
+		
+		if (e.getKeyCode() == KeyEvent.VK_UP) {
+			rock.up = true;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_DOWN){
-			rock.down=true;
+		
+		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			rock.down = true;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_LEFT){
-			rock.left=true;
+		
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			rock.left = true;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-			rock.right=true;
+		
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			rock.right = true;
 		}
+if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+	  obj.addProjectile(new Projectile(rock.x +rock.width/2 ,rock.y , 10, 10));
+}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getKeyCode() == KeyEvent.VK_UP){
-			rock.up=false;
+		if (e.getKeyCode() == KeyEvent.VK_UP) {
+			rock.up = false;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_DOWN){
-			rock.down=false;
+		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			rock.down = false;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_LEFT){
-			rock.left=false;
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			rock.left = false;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-			rock.right=false;
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			rock.right = false;
 		}
 	}
 }
