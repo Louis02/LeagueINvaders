@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class ObjectManager {
 	RocketShip rock;
-	ArrayList<Projectile> list = new ArrayList<Projectile>();
+	ArrayList<Projectile> plist = new ArrayList<Projectile>();
 	ArrayList<Alien> alist = new ArrayList<Alien>();
 	long enemyTimer = 0;
 	int enemySpawnTime = 900;
@@ -15,7 +15,7 @@ public class ObjectManager {
 
 	public void update() {
 		rock.update();
-		for (Projectile p : list) {
+		for (Projectile p : plist) {
 			p.update();
 		}
 		for (Alien a : alist) {
@@ -25,7 +25,7 @@ public class ObjectManager {
 
 	public void draw(Graphics g) {
 		rock.draw(g);
-		for (Projectile p : list) {
+		for (Projectile p : plist) {
 			p.draw(g);
 		}
 		for (Alien a : alist) {
@@ -34,7 +34,7 @@ public class ObjectManager {
 	}
 
 	public void addProjectile(Projectile pro) {
-		list.add(pro);
+		plist.add(pro);
 	}
 
 	public void addAlien(Alien a) {
@@ -50,17 +50,42 @@ public class ObjectManager {
 	}
 
 	public void purgeObjects() {
-		for (Alien a : alist) {
+		for (int i = 0; i < plist.size(); i++) {
+			Projectile p = plist.get(i);
+			if (!p.isAlive) {
+				plist.remove(p);
+				
+			}
+
+		}
+		for (int i = 0; i < alist.size(); i++) {
+
+			Alien a = alist.get(i);
 			if (!a.isAlive) {
 				alist.remove(a);
-			}
-		
-		}
-		for(Projectile p: list) {
-			if(!p.isAlive) {
-				list.remove(p);
+				System.out.println("hi");
 			}
 		}
-		
+
+	}
+
+	public void checkCollision() {
+		for (Alien a : alist) {
+
+			if (rock.collisionBox.intersects(a.collisionBox)) {
+
+				a.isAlive = false;
+				rock.isAlive = false;
+
+			}
+			for (Projectile p : plist) {
+				if (a.collisionBox.intersects(p.collisionBox)) {
+					p.isAlive = false;
+					a.isAlive = false;
+					
+				}
+			}
+
+		}
 	}
 }

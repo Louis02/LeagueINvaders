@@ -78,6 +78,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	void updateGameState() {
 		obj.update();
 		obj.manageEnemies();
+		obj.checkCollision();
+		obj.purgeObjects();
+		if(rock.isAlive == false) {
+			CURRENT_STATE = END_STATE;
+		}
 	}
 
 	void updateEndState() {
@@ -127,25 +132,25 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			}
 
 		}
-		
+
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
 			rock.up = true;
 		}
-		
+
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			rock.down = true;
 		}
-		
+
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			rock.left = true;
 		}
-		
+
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			rock.right = true;
 		}
-if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-	  obj.addProjectile(new Projectile(rock.x +rock.width/2 ,rock.y , 10, 10));
-}
+		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+			obj.addProjectile(new Projectile(rock.x + rock.width / 2, rock.y, 10, 10));
+		}
 	}
 
 	@Override
