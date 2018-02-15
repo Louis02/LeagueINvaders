@@ -8,9 +8,14 @@ public class ObjectManager {
 	ArrayList<Alien> alist = new ArrayList<Alien>();
 	long enemyTimer = 0;
 	int enemySpawnTime = 900;
+	int Score = 0;
 
 	public ObjectManager(RocketShip rock) {
 		this.rock = rock;
+	}
+
+	public int getScore() {
+		return Score;
 	}
 
 	public void update() {
@@ -54,7 +59,7 @@ public class ObjectManager {
 			Projectile p = plist.get(i);
 			if (!p.isAlive) {
 				plist.remove(p);
-				
+
 			}
 
 		}
@@ -82,7 +87,10 @@ public class ObjectManager {
 				if (a.collisionBox.intersects(p.collisionBox)) {
 					p.isAlive = false;
 					a.isAlive = false;
+					Score++;
+					System.out.println(Score);
 					
+
 				}
 			}
 

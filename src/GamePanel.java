@@ -111,6 +111,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.setFont(titleFont);
 		g.setColor(Color.pink);
 		g.drawString("Game Over", 110, 100);
+		obj.getScore();
+		g.drawString("You killed " + obj.getScore() + " aliens", 60, 500);
 	}
 
 	@Override
@@ -128,8 +130,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			if (CURRENT_STATE > END_STATE) {
 
 				CURRENT_STATE = MENU_STATE;
-
+				 
 			}
+			else if(CURRENT_STATE == END_STATE) {
+					rock = rock;
+					obj= new ObjectManager(rock);
+				}
+
 
 		}
 
