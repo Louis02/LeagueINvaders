@@ -7,7 +7,7 @@ public class ObjectManager {
 	ArrayList<Projectile> plist = new ArrayList<Projectile>();
 	ArrayList<Alien> alist = new ArrayList<Alien>();
 	long enemyTimer = 0;
-	int enemySpawnTime = 900;
+	int enemySpawnTime = 500;
 	int Score = 0;
 
 	public ObjectManager(RocketShip rock) {

@@ -6,7 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -20,12 +23,33 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	ObjectManager obj;
 	int CURRENT_STATE;
 	Font titleFont;
+
+	public static BufferedImage rocketImg;
+
+	public static BufferedImage bulletImg;
+
+	public static BufferedImage spaceImg;
 	RocketShip rock = new RocketShip(250, 750, 50, 50);
 
 	public GamePanel() {
 		timer = new Timer(1000 / 60, this);
 		titleFont = new Font("arial", Font.PLAIN, 48);
 		obj = new ObjectManager(rock);
+		try {
+
+			rocketImg = ImageIO.read(this.getClass().getResourceAsStream("rocket.png"));
+
+			bulletImg = ImageIO.read(this.getClass().getResourceAsStream("bullet.png"));
+
+			spaceImg = ImageIO.read(this.getClass().getResourceAsStream("space.png"));
+
+		} catch (IOException e) {
+
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+
+		}
 	}
 
 	@Override
@@ -80,7 +104,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		obj.manageEnemies();
 		obj.checkCollision();
 		obj.purgeObjects();
-		if(rock.isAlive == false) {
+		if (rock.isAlive == false) {
 			CURRENT_STATE = END_STATE;
 		}
 	}
@@ -124,19 +148,24 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
+
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			CURRENT_STATE++;
 
-			if (CURRENT_STATE > END_STATE) {
+			if (CURRENT_STATE == END_STATE) {
 
-				CURRENT_STATE = MENU_STATE;
-				 
+				CURRENT_STATE -= 2;
+				rock = new RocketShip(250, 700, 50, 50);
+				obj = new ObjectManager(rock);
+
+			} else if (CURRENT_STATE == MENU_STATE) {
+
+				CURRENT_STATE++;
+
+			} else if (CURRENT_STATE == GAME_STATE) {
+
+				CURRENT_STATE++;
+
 			}
-			else if(CURRENT_STATE == END_STATE) {
-					rock = rock;
-					obj= new ObjectManager(rock);
-				}
-
 
 		}
 
